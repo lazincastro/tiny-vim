@@ -1,15 +1,17 @@
 "---- ---- ---- ---- Install Dependencies ---- ---- ---- ----"
-let dep_just_installed = 0
 let colorpath = expand('~/.vim/colors/retrobox.vim')
-if !filereadable(colorpath)
-  echo "Installing retrobox..."
+let startpath = expand('~/.vim/pack')
+if !isdirectory(startpath)
+  echo "Installing dependencies..."
   echo ""
+  silent !mkdir -p ~/.vim/pack/tpope/start
+  silent !git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/tpope/start/vim-vinegar
+  silent !git clone https://tpope.io/vim/commentary.git ~/.vim/pack/tpope/start/commentary
+endif
+if !filereadable(colorpath) 
   silent !mkdir -p ~/.vim/colors
   silent !curl -fLo ~/.vim/colors/retrobox.vim --create-dirs https://raw.githubusercontent.com/vim/colorschemes/master/colors/retrobox.vim
-  let colorpath = 1
 endif
-
-
 
 "---- ---- ---- ---- Basic Setup ---- ---- ---- ----"
 syntax enable
