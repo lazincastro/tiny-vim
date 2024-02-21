@@ -1,0 +1,6 @@
+autoload/
+dirs/  
+plugged/
+black/
+colors/
+.netrwhist
