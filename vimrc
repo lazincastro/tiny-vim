@@ -62,6 +62,11 @@ set hlsearch   " highlighted search results
 set ignorecase " Ignore case when searching...
 set smartcase  " ...unless we type a capital
 
+"---- ---- ---- ---- Scrolling ---- ---- ---- ----"
+set scrolloff=8       " Minimum number of lines to keep above and below the cursor
+set sidescrolloff=15  " Minimum number of columns to keep to the left and right of the cursor
+set sidescroll=1      " Number of columns to scroll horizontally
+
 "---- ---- ---- ---- Visual Settings ---- ---- ---- ----"
 colorscheme retrobox       " I love it that colorscheme
 set bg=dark                " Background used for highlight color
@@ -88,9 +93,16 @@ set termwinsize=10x0
 
 "---- ---- ---- ---- Auto-Commands ---- ---- ---- ----"
 " Remember cursor position
-" When a file is opened, move the cursor to the last position
 autocmd BufReadPost *
  \ if line("'\"") > 0 && line("'\"") <= line("$") |
  \   execute "normal! g`\"" |
  \ endif
- \ "
+
+" WSL yank support
+let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+if executable(s:clip)
+    augroup WSLYank
+        autocmd!
+        autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+    augroup END
+endif
