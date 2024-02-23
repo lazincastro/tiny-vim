@@ -10,6 +10,7 @@ if !isdirectory(startpath)
   silent !git clone https://github.com/github/copilot.vim ~/.vim/pack/github/start/copilot.vim
   silent !git clone https://github.com/airblade/vim-gitgutter.git ~/.vim/pack/airblade/start/vim-gitgutter
   silent !git clone https://github.com/junegunn/fzf.vim ~/.vim/pack/junegunn/start/fzf.vim
+  silent !git clone https://github.com/itchyny/lightline.vim ~/.vim/pack/itchyny/start/lightline.vim
 endif
 if !filereadable(colorpath) 
   silent !mkdir -p ~/.vim/colors
