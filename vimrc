@@ -9,6 +9,7 @@ if !isdirectory(startpath)
   silent !git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/tpope/start/vim-vinegar
   silent !git clone https://github.com/github/copilot.vim ~/.vim/pack/github/start/copilot.vim
   silent !git clone https://github.com/airblade/vim-gitgutter.git ~/.vim/pack/airblade/start/vim-gitgutter
+  silent !git clone https://github.com/junegunn/fzf.vim ~/.vim/pack/junegunn/start/fzf.vim
 endif
 if !filereadable(colorpath) 
   silent !mkdir -p ~/.vim/colors
@@ -90,6 +91,12 @@ nnoremap <leader>. :lcd %:p:h<CR>
 nnoremap <silent> <leader>sh :below terminal<CR>
 tnoremap <silent><ESC> <C-w>:q!<CR>
 set termwinsize=10x0
+
+"---- ---- ---- ---- Plugins ---- ---- ---- ----"
+" FZF buffer search
+nnoremap <leader>fb :Buffers<CR>
+" FZF file search
+nnoremap <leader>ff :Files<CR>
 
 "---- ---- ---- ---- Auto-Commands ---- ---- ---- ----"
 " Remember cursor position
