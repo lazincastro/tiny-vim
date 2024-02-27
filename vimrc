@@ -11,6 +11,8 @@ if !isdirectory(startpath)
   silent !git clone https://github.com/junegunn/fzf.vim ~/.vim/pack/junegunn/start/fzf.vim
   silent !git clone https://github.com/itchyny/lightline.vim ~/.vim/pack/itchyny/start/lightline.vim
   silent !git clone https://github.com/dracula/vim.git ~/.vim/pack/themes/start/dracula
+  silent !git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/christoomey/start/vim-tmux-navigator
+  silent !git clone https://github.com/machakann/vim-highlightedyank.git ~/.vim/pack/machakann/start/vim-highlightedyank
   silent !git clone https://github.com/github/copilot.vim ~/.vim/pack/github/start/copilot.vim
 endif
 
