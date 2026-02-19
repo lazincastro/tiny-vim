@@ -1,118 +1,143 @@
-"---- ---- ---- ---- Install Dependencies ---- ---- ---- ----"
-let colorpath = expand('~/.vim/colors/retrobox.vim')
-let startpath = expand('~/.vim/pack')
-if !isdirectory(startpath)
-  echo "Installing dependencies..."
-  echo ""
-  silent !mkdir -p ~/.vim/pack/
-  silent !git clone https://tpope.io/vim/commentary.git ~/.vim/pack/tpope/start/commentary
-  silent !git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/tpope/start/vim-vinegar
-  silent !git clone https://github.com/airblade/vim-gitgutter.git ~/.vim/pack/airblade/start/vim-gitgutter
-  silent !git clone https://github.com/junegunn/fzf.vim ~/.vim/pack/junegunn/start/fzf.vim
-  silent !git clone https://github.com/itchyny/lightline.vim ~/.vim/pack/itchyny/start/lightline.vim
-  silent !git clone https://github.com/dracula/vim.git ~/.vim/pack/themes/start/dracula
-  silent !git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/christoomey/start/vim-tmux-navigator
-  silent !git clone https://github.com/machakann/vim-highlightedyank.git ~/.vim/pack/machakann/start/vim-highlightedyank
-  silent !git clone https://github.com/github/copilot.vim ~/.vim/pack/github/start/copilot.vim
+"============================================================
+" Install Dependencies (only if not installed)
+"============================================================
+
+let s:packdir = expand('~/.vim/pack')
+let s:plugdir = s:packdir . '/plugins/start'
+
+if !isdirectory(s:plugdir)
+  echo "Installing plugins..."
+  silent !mkdir -p ~/.vim/pack/plugins/start
+
+  silent !git clone https://tpope.io/vim/commentary.git ~/.vim/pack/plugins/start/commentary
+  silent !git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/plugins/start/vim-vinegar
+  silent !git clone https://github.com/airblade/vim-gitgutter.git ~/.vim/pack/plugins/start/vim-gitgutter
+  silent !git clone https://github.com/junegunn/fzf.vim ~/.vim/pack/plugins/start/fzf.vim
+  silent !git clone https://github.com/itchyny/lightline.vim ~/.vim/pack/plugins/start/lightline.vim
+  silent !git clone https://github.com/dracula/vim.git ~/.vim/pack/plugins/start/dracula
+  silent !git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/plugins/start/vim-tmux-navigator
+  silent !git clone https://github.com/machakann/vim-highlightedyank.git ~/.vim/pack/plugins/start/vim-highlightedyank
+  silent !git clone https://github.com/github/copilot.vim ~/.vim/pack/plugins/start/copilot.vim
 endif
 
-"---- ---- ---- ---- Basic Setup ---- ---- ---- ----"
+"============================================================
+" Basic Setup
+"============================================================
+
 syntax enable
 filetype plugin indent on
 set encoding=utf-8
-set backspace=indent,eol,start    " Make backspace behave like every other editor
-let mapleader = ','               " The default leader is \
-set nowrap                        " Disable long line wrap
-set expandtab                     " Tabs and Spaces Handling
-set tabstop=2                     " Number of space that <TAB>
-set softtabstop=2                 " Number of space that <TAB>
-set shiftwidth=2                  " Number of space on (auto)ident
-set laststatus=2                  " Always Show Status Bar
-set noerrorbells visualbell t_vb= " No damn bells
-set clipboard=unnamed,unnamedplus " Copy into system (*, +) register
-set tags=tags;                    " Look for a tags file in directories
-set confirm                       " use a dialog when an operation has to be confirmed
-set mouse=a                       " Enable mouse support
-set formatoptions-=cro            " Stop newline continution of comments
-set wildmenu                      " Enable menu for command completion
-set noshowmode                    " Hide the mode
-set rtp+=~/.fzf                   " Add fzf to runtime path
+set backspace=indent,eol,start
+let mapleader = ','
 
-"---- ---- ---- ---- Better Backup, Swap and Undos Storage ---- ---- ---- ----"
-set directory=~/.vim/dirs/tmp               " directory to place swap files in
-set backup                                  " make backup files
-set backupdir=~/.vim/dirs/backups           " where to put backup files
-set undofile                                " persistent undos
-set undodir=~/.vim/dirs/undos               " undo after you re-open the file
-set viminfo+=n~/.vim/dirs/viminfo
-let g:yankring_history_dir = '~/.vim/dirs/' " store yankring history file
+set nowrap
+set expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
-" Create Needed Directories if They Don't Exist
-if !isdirectory(&backupdir)
-  call mkdir(&backupdir, "p")
-endif
-if !isdirectory(&directory)
-  call mkdir(&directory, "p")
-endif
-if !isdirectory(&undodir)
-  call mkdir(&undodir, "p")
-endif
+set laststatus=2
+set noerrorbells
+set visualbell
+set clipboard=unnamedplus
+set confirm
+set mouse=a
+set formatoptions-=cro
+set wildmenu
+set noshowmode
 
-"---- ---- ---- ---- Searching ---- ---- ---- ----"
-set incsearch  " incremental search
-set hlsearch   " highlighted search results
-set ignorecase " Ignore case when searching...
-set smartcase  " ...unless we type a capital
+"============================================================
+" Backup, Swap and Undo
+"============================================================
 
-"---- ---- ---- ---- Scrolling ---- ---- ---- ----"
-set scrolloff=8       " Minimum number of lines to keep above and below the cursor
-set sidescrolloff=15  " Minimum number of columns to keep to the left and right of the cursor
-set sidescroll=1      " Number of columns to scroll horizontally
+set backup
+set undofile
 
-"---- ---- ---- ---- Visual Settings ---- ---- ---- ----"
-colorscheme dracula        " I love it that colorscheme
-set bg=dark                " Background used for highlight color
-set t_Co=256               " Enable 256 colors in Vim
-set fillchars+=vert:\      " remove ugly vertical lines on window division
+set directory^=~/.vim/tmp//
+set backupdir^=~/.vim/backups//
+set undodir^=~/.vim/undos//
+
+for s:dir in ['~/.vim/tmp', '~/.vim/backups', '~/.vim/undos']
+  if !isdirectory(expand(s:dir))
+    call mkdir(expand(s:dir), "p")
+  endif
+endfor
+
+"============================================================
+" Searching
+"============================================================
+
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+
+"============================================================
+" Scrolling
+"============================================================
+
+set scrolloff=8
+set sidescrolloff=10
+
+"============================================================
+" Visual Settings
+"============================================================
+
+set termguicolors
+set background=dark
+colorscheme dracula
+
+set fillchars+=vert:\ 
+
 let g:lightline = { 'colorscheme': 'dracula' }
-autocmd SourcePost * highlight Normal ctermbg=NONE guibg=NONE
-if !has("gui_running")
-  hi vertsplit ctermfg=bg ctermbg=bg
-endif
 
-"---- ---- ---- ---- Mappings ---- ---- ---- ----"
-" Escape to the NORMAL mode
+highlight Normal guibg=NONE ctermbg=NONE
+highlight VertSplit guibg=NONE ctermbg=NONE
+
+"============================================================
+" Mappings
+"============================================================
+
 inoremap jj <ESC>
 
-" Toggle line number, cursor line, column line and highlight search
-noremap <silent> <leader><space> :set nu! cursorline! cursorcolumn!<CR>:nohl<CR>
-
-"" Set working directory
+nnoremap <silent> <leader><space> :set nu! cursorline! cursorcolumn!<CR>:nohlsearch<CR>
 nnoremap <leader>. :lcd %:p:h<CR>
 
-"" terminal emulation
+" Terminal
 nnoremap <silent> <leader>sh :below terminal<CR>
-tnoremap <silent><ESC> <C-w>:q!<CR>
+tnoremap <Esc> <C-\><C-n>
 set termwinsize=10x0
 
-"---- ---- ---- ---- Plugins ---- ---- ---- ----"
-" FZF buffer search
+" FZF
 nnoremap <leader>fb :Buffers<CR>
-" FZF file search
 nnoremap <leader>ff :Files<CR>
 
-"---- ---- ---- ---- Auto-Commands ---- ---- ---- ----"
-" Remember cursor position
-autocmd BufReadPost *
- \ if line("'\"") > 0 && line("'\"") <= line("$") |
- \   execute "normal! g`\"" |
- \ endif
+"============================================================
+" Auto Commands
+"============================================================
 
-" WSL yank support
-let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+augroup RestoreCursor
+  autocmd!
+  autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   execute "normal! g`\"" |
+        \ endif
+augroup END
+
+" Highlight yank
+augroup HighlightYank
+  autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+augroup END
+
+" WSL Yank support
+let s:clip = '/mnt/c/Windows/System32/clip.exe'
 if executable(s:clip)
-    augroup WSLYank
-        autocmd!
-        autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-    augroup END
+  augroup WSLYank
+    autocmd!
+    autocmd TextYankPost *
+          \ if v:event.operator ==# 'y' |
+          \   call system(s:clip, @0) |
+          \ endif
+  augroup END
 endif
