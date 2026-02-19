@@ -128,7 +128,7 @@ It aims to be:
 ## 🚀 Installation
 
 ```bash
-git clone <your-repo> ~/.vim-config
+git clone https://github.com/lazincastro/tiny-vim.git ~/.vim-config
 cp ~/.vim-config/vimrc ~/.vimrc
 ```
 
